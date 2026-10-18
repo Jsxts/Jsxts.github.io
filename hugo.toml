@@ -1,0 +1,110 @@
+# ============================================================
+#  基础设置
+# ============================================================
+baseURL = "https://jsxts.github.io/"
+locale = "zh-CN"
+defaultContentLanguage = "zh-cn"
+title = "Jsxts 的博客"
+theme = "PaperMod"
+
+# 允许正文里直接写 HTML，同时开启 emoji 简写（如 :smile:）
+enableRobotsTXT = true
+enableEmoji = true
+
+# 分页：每页文章数
+paginate = 10
+
+# 生成 RSS 和搜索用的 JSON 索引
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# ============================================================
+#  主题参数
+# ============================================================
+[params]
+  env = "production"                    # 生产环境，启用资源压缩
+  description = "记录学习与生活"
+  author = "Jsxts"
+  defaultTheme = "auto"                 # auto / light / dark，跟随系统
+  mainSections = ["posts"]              # 归档、首页只统计 posts 目录
+
+  ShowReadingTime = true                # 显示阅读时长
+  ShowShareButtons = false              # 分享按钮（国内一般不用）
+  ShowPostNavLinks = true               # 文末上一篇/下一篇
+  ShowBreadCrumbs = true                # 面包屑导航
+  ShowCodeCopyButtons = true            # 代码块复制按钮
+  ShowToc = true                        # 显示目录
+  TocOpen = false                       # 目录默认折叠
+  ShowFullTextinRSS = true
+  ShowRssButtonInSectionTermList = true
+  hideFooter = false
+
+  # 首页顶部欢迎语
+  [params.homeInfoParams]
+    Title = "Hi，欢迎来到我的博客 👋"
+    Content = """
+这里记录我的学习笔记、技术总结和生活随笔。
+从左侧菜单可以浏览**文章**、**归档**和**标签**，也可以用**搜索**查找内容。
+"""
+
+  # 社交图标
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/jsxts"
+
+  # 文章底部「编辑此页」按钮
+  [params.editPost]
+    URL = "https://github.com/jsxts/jsxts.github.io/edit/main/content/"
+    Text = "编辑此页"
+    appendFilePath = true
+
+  # 搜索（hugo 内置 Fuse.js）
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    location = 0
+    distance = 1000
+    threshold = 0.4
+    minMatchCharLength = 1
+    keys = ["title", "permalink", "summary", "content"]
+
+# ============================================================
+#  导航菜单
+# ============================================================
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "文章"
+    url = "/posts/"
+    weight = 10
+  [[menu.main]]
+    identifier = "archives"
+    name = "归档"
+    url = "/archives/"
+    weight = 20
+  [[menu.main]]
+    identifier = "tags"
+    name = "标签"
+    url = "/tags/"
+    weight = 30
+  [[menu.main]]
+    identifier = "search"
+    name = "搜索"
+    url = "/search/"
+    weight = 40
+  [[menu.main]]
+    identifier = "about"
+    name = "关于"
+    url = "/about/"
+    weight = 50
+
+# ============================================================
+#  Markdown 渲染
+# ============================================================
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true                     # 允许 Markdown 中嵌入 HTML
+  [markup.highlight]
+    noClasses = false                   # 代码高亮走 CSS，支持亮/暗主题切换
+    lineNos = false
