@@ -59,7 +59,7 @@ body.list,
         所以 body 上的底色其实看不见，真正决定观感的是这些卡片和面板。
    -------------------------------------------------------------------------- */
 :root {
-    --bg-scrim: rgba(255, 255, 255, 0.50);
+    --bg-scrim: rgba(255, 255, 255, 0.38);
     --panel: rgba(255, 255, 255, 0.30);
     --theme: rgba(255, 255, 255, 0.80);
     --entry: rgba(255, 255, 255, 0.86);
@@ -69,7 +69,7 @@ body.list,
 
 :root[data-theme="dark"] {
     /* 深色模式下背景图偏亮，蒙层必须更重，否则浅色文字对比度不够 */
-    --bg-scrim: rgba(12, 13, 16, 0.58);
+    --bg-scrim: rgba(12, 13, 16, 0.48);
     --panel: rgba(18, 19, 22, 0.34);
     --theme: rgba(20, 21, 24, 0.80);
     --entry: rgba(32, 33, 37, 0.86);
@@ -95,8 +95,8 @@ body.list,
 .main {
     background: var(--panel);
     border-radius: var(--radius);
-    -webkit-backdrop-filter: blur(10px) saturate(130%);
-    backdrop-filter: blur(10px) saturate(130%);
+    -webkit-backdrop-filter: blur(6px) saturate(120%);
+    backdrop-filter: blur(6px) saturate(120%);
     margin-block: var(--gap);
 }
 
