@@ -1,0 +1,31 @@
+{{- /*
+  覆盖主题的 social_icons.html（Hugo 里同路径的部分模板是整文件覆盖）。
+
+  只为一件事：把知乎图标换成描边风格。主题自带的 zhihu 是实心 logo
+  （fill="currentColor"），和同一排的 GitHub（Feather）、B 站（Tabler）
+  两个描边图标放在一起会显得偏「重」。这里改成 Tabler 的 brand-zhihu，
+  同样是 stroke-width: 2 + 圆角线帽，视觉重量和另两个一致。
+
+  其余图标仍然交回主题的 svg.html 处理，所以本文件必须把主题原来那一小段
+  循环完整保留，不能只写 zhihu 一个分支 —— 否则别的图标会全部渲染不出来。
+*/ -}}
+<div class="social-icons" {{ with .align}}align="{{.}}" {{- end }}>
+    {{- range site.Params.socialIcons }}
+    <a href="{{ trim .url " " | safeURL }}" target="_blank" rel="noopener noreferrer me"
+        title="{{ (.title | default .name) | title }}">
+        {{- if (eq (trim .name " " | lower) "zhihu") }}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 6h6v12h-2l-2 2l-1 -2h-1l0 -12" />
+            <path d="M4 12h6.5" />
+            <path d="M10.5 6h-5" />
+            <path d="M6 4c-.5 2.5 -1.5 3.5 -2.5 4.5" />
+            <path d="M8 6v7c0 4.5 -2 5.5 -4 7" />
+            <path d="M11 18l-3 -5" />
+        </svg>
+        {{- else }}
+        {{ partial "svg.html" . }}
+        {{- end }}
+    </a>
+    {{- end }}
+</div>
