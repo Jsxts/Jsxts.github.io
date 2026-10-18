@@ -3,7 +3,7 @@
 # ============================================================
 baseURL = "https://jsxts.github.io/"
 locale = "zh-CN"
-defaultContentLanguage = "zh-cn"
+defaultContentLanguage = "zh"
 title = "Jsxts 的博客"
 theme = "PaperMod"
 
@@ -25,6 +25,7 @@ paginate = 10
   env = "production"                    # 生产环境，启用资源压缩
   description = "记录学习与生活"
   author = "Jsxts"
+  DateFormat = "2006年1月2日"            # 文章日期显示格式
   defaultTheme = "auto"                 # auto / light / dark，跟随系统
   mainSections = ["posts"]              # 归档、首页只统计 posts 目录
 
@@ -53,10 +54,20 @@ paginate = 10
     url = "https://github.com/jsxts"
 
   # 文章底部「编辑此页」按钮
+  # 注意：URL 结尾不要加斜杠，主题会用 "%s/%s" 拼接文件路径
   [params.editPost]
-    URL = "https://github.com/jsxts/jsxts.github.io/edit/main/content/"
+    URL = "https://github.com/jsxts/jsxts.github.io/edit/main/content"
     Text = "编辑此页"
     appendFilePath = true
+
+  # 站点图标（文件放在 static/ 目录下）
+  [params.assets]
+    favicon = "favicon.ico"
+    favicon16x16 = "favicon-16x16.png"
+    favicon32x32 = "favicon-32x32.png"
+    apple_touch_icon = "apple-touch-icon.png"
+    safari_pinned_tab = "safari-pinned-tab.svg"
+    theme_color = "#2e2e33"
 
   # 搜索（hugo 内置 Fuse.js）
   [params.fuseOpts]
