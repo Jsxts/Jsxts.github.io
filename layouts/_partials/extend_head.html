@@ -10,9 +10,9 @@
 {{- with resources.Get "images/bg.jpg" -}}
     {{- $bg := . -}}
     {{- if gt $bg.Width 1920 -}}
-        {{- $bg = $bg.Resize "1920x webp q82" -}}
+        {{- $bg = $bg.Resize "1920x webp q90" -}}
     {{- else -}}
-        {{- $bg = $bg.Process "webp q82" -}}
+        {{- $bg = $bg.Process "webp q90" -}}
     {{- end -}}
     <style>
         :root {
