@@ -49,9 +49,19 @@ paginate = 10
 """
 
   # 社交图标
+  # 图标本体由主题的 layouts/_partials/svg.html 按 name 匹配，尺寸/间距
+  # 由 .social-icons 统一控制，所以这里只填 name 和 url 即可。
   [[params.socialIcons]]
     name = "github"
     url = "https://github.com/jsxts"
+
+  [[params.socialIcons]]
+    name = "zhihu"
+    url = "https://www.zhihu.com/people/jsxts"
+
+  [[params.socialIcons]]
+    name = "bilibili"
+    url = "https://space.bilibili.com/1535588703"
 
   # 文章底部「编辑此页」按钮
   # 注意：URL 结尾不要加斜杠，主题会用 "%s/%s" 拼接文件路径
