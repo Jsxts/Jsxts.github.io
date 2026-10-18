@@ -1,0 +1,22 @@
+{{- /*
+  全站背景图。
+
+  图片放在 assets/images/bg.jpg，交给 Hugo 处理：
+  - 自动转成 WebP（体积更小）
+  - 自动加内容指纹，换图后浏览器缓存会自动失效
+
+  换背景图时：直接替换 assets/images/bg.jpg，不用改任何代码。
+*/ -}}
+{{- with resources.Get "images/bg.jpg" -}}
+    {{- $bg := . -}}
+    {{- if gt $bg.Width 1920 -}}
+        {{- $bg = $bg.Resize "1920x webp q82" -}}
+    {{- else -}}
+        {{- $bg = $bg.Process "webp q82" -}}
+    {{- end -}}
+    <style>
+        :root {
+            --bg-image: url("{{ $bg.RelPermalink }}");
+        }
+    </style>
+{{- end -}}

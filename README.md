@@ -81,6 +81,27 @@ showToc: true                     # 是否显示右侧目录
 - `[params.socialIcons]` — 社交图标
 - `[params] DateFormat` — 日期显示格式
 
+## 背景图
+
+全站背景图是 `assets/images/bg.jpg`，由 Hugo 自动转成 WebP 并加内容指纹。
+
+**换图：直接替换 `assets/images/bg.jpg` 就行，不用改任何代码。**
+
+相关文件只有两个，都可以删掉来还原成纯色背景：
+
+| 文件 | 作用 |
+| --- | --- |
+| `assets/images/bg.jpg` | 背景图片本身 |
+| `assets/css/extended/background.css` | 背景图 + 毛玻璃面板的全部样式 |
+| `layouts/_partials/extend_head.html` | 把处理后的图片地址注入 `--bg-image` 变量 |
+
+调参提示（都在 `background.css` 顶部）：
+
+- `--panel`：内容面板的透明度，调大 = 内容更清晰、背景更淡
+- `--entry`：文章列表卡片的透明度
+- `.main` 的 `blur(20px)`：毛玻璃模糊强度
+- `background-position`：改 `center center` 可调整图片裁剪位置
+
 ## 部署
 
 `.github/workflows/hugo.yaml` 已配好：推送 `main` 分支 → 自动装 Hugo → 构建 → 发布到 GitHub Pages。

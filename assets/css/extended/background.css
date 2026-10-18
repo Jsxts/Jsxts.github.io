@@ -1,0 +1,140 @@
+/* ==========================================================================
+   全站背景图
+   --------------------------------------------------------------------------
+   背景图的 URL 由 layouts/_partials/extend_head.html 注入到 --bg-image 变量。
+   换图：直接替换 assets/images/bg.jpg 即可，不需要改这里的代码。
+
+   实现思路（三层）：
+     1. <body> 铺背景图，固定不滚动
+     2. .main 作为一块毛玻璃「内容面板」，图片在这里被模糊，保证任何
+        页面模板下正文都可读（归档页、标签页、404 页主题都没给容器底色）
+     3. 主题原有的卡片（文章列表项、文章正文）改成半透明，压在半透明面板上
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. 把图片铺到 <body> 上
+
+   选择器为什么这么长？要同时压过主题的两种写法：
+
+   a) 列表页（首页/归档/标签）的 body 是 <body class="list">，
+      主题有 `.list { background: var(--code-bg) }` 和
+      `[data-theme="dark"] .list { background: var(--theme) }`。
+      这两条用 background 简写，会把 background-image 重置成 none，
+      且优先级（0,1,0 / 0,2,0）高于裸 `body`（0,0,1）。
+
+   b) 文章页的 body 是 <body id="top">，没有 list 类，
+      只有 reset.css 的 `body { background: var(--theme) }`，
+      裸 `body` 即可，靠加载顺序取胜（extended.css 排在 core.css 之后）。
+   -------------------------------------------------------------------------- */
+body,
+body.list,
+[data-theme="dark"] body,
+[data-theme="dark"] body.list {
+    background-image: var(--bg-image, none);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* 手机上 background-attachment: fixed 会导致缩放异常，改回跟随滚动 */
+@media (max-width: 640px) {
+    body,
+    body.list,
+    [data-theme="dark"] body,
+    [data-theme="dark"] body.list {
+        background-attachment: scroll;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   2. 颜色变量
+   - --panel  : .main 内容面板的底色（唯一让背景图透出来的地方）
+   - --entry  : 主题的卡片底色（文章列表项 / 文章正文）
+   - --theme  : 页面底色，被背景图盖住，主要给导航栏用
+   注意：background-color 永远画在 background-image 之下，
+        所以 body 上的底色其实看不见，真正决定观感的是这些卡片和面板。
+   -------------------------------------------------------------------------- */
+:root {
+    --panel: rgba(255, 255, 255, 0.60);
+    --theme: rgba(255, 255, 255, 0.80);
+    --entry: rgba(255, 255, 255, 0.86);
+    --code-bg: rgba(250, 250, 252, 0.88);
+    --border: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme="dark"] {
+    --panel: rgba(18, 19, 22, 0.60);
+    --theme: rgba(20, 21, 24, 0.80);
+    --entry: rgba(32, 33, 37, 0.86);
+    --code-bg: rgba(38, 39, 44, 0.88);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+/* --theme 在主题里还被当作「反色文字」用（分页按钮的文字色）。
+   上面把它改成了半透明，这里单独修回来，否则文字会发虚。 */
+.pagination a {
+    color: rgb(255, 255, 255);
+}
+
+:root[data-theme="dark"] .pagination a {
+    color: rgb(29, 30, 32);
+}
+
+/* --------------------------------------------------------------------------
+   3. 内容面板：所有页面的正文都在这块毛玻璃上，保证可读性
+   .main 原本是 `margin: auto`（水平居中），下面只覆盖上下外边距，
+   左右仍然是 auto，不会被破坏。
+   -------------------------------------------------------------------------- */
+.main {
+    background: var(--panel);
+    border-radius: var(--radius);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    margin-block: var(--gap);
+}
+
+/* --------------------------------------------------------------------------
+   4. 顶部导航栏：主题没给它底色，直接压在图上会影响可读性
+   -------------------------------------------------------------------------- */
+.header {
+    background: var(--theme);
+    border-bottom: 1px solid var(--border);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* --------------------------------------------------------------------------
+   5. 文章正文卡片：主题没给内边距，文字会紧贴卡片边缘
+   -------------------------------------------------------------------------- */
+.post-single {
+    padding: var(--gap);
+}
+
+/* 首页欢迎区块的元素上同时挂了 .first-entry 和 .home-info，
+   主题给 .first-entry 设了 min-height: 320px，会让卡片下面空一大片，
+   改成按内容自适应。 */
+.first-entry.home-info {
+    min-height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   6. 代码块保持不透明，代码可读性优先
+   -------------------------------------------------------------------------- */
+.post-content pre,
+.md-content pre,
+div.highlight,
+.chroma {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+/* --------------------------------------------------------------------------
+   7. 页脚：文章页较长时页脚会落在内容面板之外、直接压在背景图上，
+      这里给它和导航栏一样的毛玻璃底，保证小字可读
+   -------------------------------------------------------------------------- */
+.footer {
+    background: var(--theme);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    backdrop-filter: blur(14px) saturate(140%);
+}
