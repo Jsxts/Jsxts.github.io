@@ -3,6 +3,9 @@
    --------------------------------------------------------------------------
    背景图的 URL 由 layouts/_partials/extend_head.html 注入到 --bg-image 变量。
    换图：直接替换 assets/images/bg.jpg 即可，不需要改这里的代码。
+   注意 bg.jpg 顶部预留了 150px 的「留白」（生成脚本做的渐进虚化延续）：
+   人物原本头顶贴着上边缘，60px 高的导航栏会把它压住，所以图上必须先有
+   多余空间，再配合 background-position: center top 让脸落到导航栏下方。
 
    实现思路（三层）：
      1. <body> 铺背景图，固定不滚动
@@ -36,7 +39,9 @@ body.list,
        并在下面的 :root 里补回 --bg-scrim 变量即可。 */
     background-image: var(--bg-image, none);
     background-size: cover;
-    background-position: center center;
+    /* top 而不是 center：图片顶部有 150px 留白，贴着顶部才能保证
+       人物的脸落在 60px 高的导航栏下方（center 会把留白裁掉一半） */
+    background-position: center top;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
