@@ -1,0 +1,33 @@
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info">
+    <header class="entry-header">
+        <h1>{{ .Title | markdownify }}</h1>
+    </header>
+    <div class="entry-content md-content">
+        {{ $opts := dict "display" "block" }}
+        {{ .Content | $.Page.RenderString $opts }}
+    </div>
+    <footer class="entry-footer">
+        {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+    </footer>
+</article>
+{{- end -}}
+
+{{- /* ---------------------------------------------------------------
+     首页的「文件夹」入口。
+
+     posts/luogu 下的文章在 _index.md 里用 cascade 设了
+     hiddenInHomeList，不会出现在首页列表里，所以这里补一张卡片把它们
+     收成一个入口，点进去才是文章列表。数量是构建时实时算的，不用手改。
+---------------------------------------------------------------- */ -}}
+{{- with site.GetPage "/posts/luogu" }}
+    <article class="post-entry">
+        <header class="entry-header">
+            <h2 class="entry-hint-parent">{{ .Title }}</h2>
+        </header>
+        <div class="entry-content">
+            <p>{{ .Summary | plainify | htmlUnescape }}</p>
+        </div>
+        <a class="entry-link" aria-label="{{ .Title }}" href="{{ .RelPermalink }}"></a>
+    </article>
+{{- end }}

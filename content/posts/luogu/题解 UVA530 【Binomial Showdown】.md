@@ -1,0 +1,58 @@
+---
+title: "题解 UVA530 【Binomial Showdown】"
+date: 2021-01-27T21:10:12+08:00
+draft: false
+author: "Jsxts"
+tags: ["题解"]
+slug: "题解-uva530-binomial-showdown"
+original: "https://www.luogu.com.cn/article/i4byvk71"
+math: true
+---
+# 题解 UVA530
+[传送门](https://www.luogu.com.cn/problem/UVA530)
+
+## 题意
+
+给定 $n,k$，求 $C_n^k$。$C_n^k$ 表示从 $n$ 个元素中不考虑顺序地选出 $k$ 个元素的方法。
+
+**有多组数据。**
+
+## 题解
+
+我们知道
+$$C_n^k = \dfrac {n \times (n-1) \times (n-2) \times...\times(n-k+1)} {k!}$$ 
+
+所以现在，我们可以暴力枚举，把 $n$ 到 $n-k+1$ 的乘积算出来。
+
+但这个数会爆 $long$ $long$，所以我们要边乘边除，~~你也可以试试高精度~~。
+
+因为连续的两个数的积是 $2$ 的倍数，连续的三个数的积是 $3$ 的倍数 $...$，所以边乘边除是可以除得尽的。
+
+代码很短，只有 $23$ 行。
+
+## Code
+
+```cpp
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+	while (1) {
+		long long n,k;
+		scanf("%lld%lld",&n,&k);
+		if (!k && !n) break;
+		if (k == 0 || k == n) {//如果n个数里面选0个或n个，就只有一种情况 
+			printf("1\n");
+			continue;
+		}
+		if (k > n / 2) k = n - k;//C(n,k)等价于C(n,n-k) 
+		long long res = n-k+1;
+		for (int i = n-k+2;i <= n;i ++ ) {
+			res *= i;//从n到n-k+1的积 
+			res /= (i+k-n);//边乘边除 
+		}
+		printf("%lld\n",res);
+	}
+	return 0;
+}
+```

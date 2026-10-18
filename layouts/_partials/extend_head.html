@@ -20,3 +20,28 @@
         }
     </style>
 {{- end -}}
+
+{{- /*
+  数学公式（MathJax）。
+
+  只在 front matter 写了 math: true 的文章里加载，其余页面不受影响。
+  用 $...$ 行内公式、$$...$$ 块级公式，和洛谷的写法保持一致。
+  CDN 用 cdnjs：实测国内 234ms，而 jsDelivr 要 11s 以上，别换。
+  代码块（pre/code）里的 $ 不会被当成公式。
+*/ -}}
+{{- if .Param "math" -}}
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [["$", "$"], ["\\(", "\\)"]],
+                displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+                processEscapes: true,
+                tags: "ams",
+            },
+            options: {
+                skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+            },
+        };
+    </script>
+    <script defer id="MathJax-script" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+{{- end -}}
