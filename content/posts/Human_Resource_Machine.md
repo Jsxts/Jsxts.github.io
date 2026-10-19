@@ -1,7 +1,7 @@
 ---
 title: 'Human Resource Machine'
 date: 2026-10-19T14:13:15+08:00
-draft: true
+draft: false 
 author: "Jsxts"
 description: ""
 summary: ""
@@ -11,7 +11,7 @@ categories: []
 showToc: true
 TocOpen: false
 hidemeta: false
-comments: false 
+comments: true 
 ---
 
 前段时间无聊，通过不断地优（卡）化（常），终于满灯通关了这个游戏。今天看到程设课的期末大作业竟然是复现这个游戏，于是在开始搓之前先回顾了一下，并顺便写一下对这个游戏的介绍以及部分关卡的攻略。
