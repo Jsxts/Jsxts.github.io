@@ -1,7 +1,8 @@
 ---
 title: '{{ replace .File.ContentBaseName `-` ` ` | title }}'
 date: {{ .Date }}
-draft: true
+draft: false
+math: true
 author: "Jsxts"
 description: ""
 summary: ""
