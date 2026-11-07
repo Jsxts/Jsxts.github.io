@@ -126,6 +126,16 @@ paginate = 10
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true                     # 允许 Markdown 中嵌入 HTML
+
+    # 数学公式原样透传给 MathJax。
+    # 不开的话 Goldmark 会把公式里的 LaTeX 换行命令 \\ 当成反斜杠转义吃掉，
+    # 导致 $$...$$ 多行公式在网页上不换行。开启后公式内容不做 Markdown 处理。
+    [markup.goldmark.extensions.passthrough]
+      enable = true
+      [markup.goldmark.extensions.passthrough.delimiters]
+        block = [['\[', '\]'], ['$$', '$$']]
+        inline = [['\(', '\)'], ['$', '$']]
+
   [markup.highlight]
     noClasses = false                   # 代码高亮走 CSS，支持亮/暗主题切换
     lineNos = false
